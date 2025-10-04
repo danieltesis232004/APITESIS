@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import usuarioRoutes from './Routes/usuarios.routes.js'
+import usuarioRoutes from './routes/usuarios.routes.js'
 
 
 
