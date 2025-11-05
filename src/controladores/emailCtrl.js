@@ -1,4 +1,3 @@
-// backend/controllers/mailController.js
 import nodemailer from 'nodemailer';
 
 export const enviarCodigoPorCorreo = async (req, res) => {
