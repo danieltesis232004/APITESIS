@@ -3,6 +3,6 @@ import { enviarCodigoPorCorreo } from '../controladores/emailCtrl.js';
 
 const router = express.Router();
 
-router.post('/enviar/:correoDestino/:codigo', enviarCodigoPorCorreo);
+router.post('/enviar', enviarCodigoPorCorreo); 
 
 export default router;
