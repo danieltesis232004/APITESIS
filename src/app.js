@@ -7,6 +7,8 @@ import tipoEventoRoutes from './routes/tipoEvento.routes.js'
 import contactoEmergenciaRoutes from './routes/contactoEmergencia.routes.js'
 import eventosRoutes from './routes/eventos.routes.js'
 import recorridoRoutes from './routes/recorrido.routes.js'
+import emailRoutes from './routes/email.routes.js'
+
 const app = express()
 
 const corsOptions = {
@@ -25,6 +27,7 @@ app.use('/api', tipoEventoRoutes)
 app.use('/api', contactoEmergenciaRoutes)
 app.use('/api', recorridoRoutes)
 app.use('/api', eventosRoutes)
+app.use('/api', emailRoutes)
 
 app.use((req, res, next) => {
   res.status(404).json({
