@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
 export const enviarCodigoPorCorreo = async (req, res) => {
-  const { correoDestino, codigo } = req.params;
+  const { correoDestino, codigo } = req.body; 
 
   const transporter = nodemailer.createTransport({
     service: 'gmail',
