@@ -1,5 +1,5 @@
 import express from 'express';
-import { enviarCodigoPorCorreo } from '../Controladores/emailCtrl.js';
+import { enviarCodigoPorCorreo } from '../controladores/emailCtrl.js';
 
 const router = express.Router();
 
