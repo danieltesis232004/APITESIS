@@ -6,7 +6,7 @@ import tipoContactoRoutes from './routes/tipoContacto.routes.js'
 import tipoEventoRoutes from './routes/tipoEvento.routes.js'
 import contactoEmergenciaRoutes from './routes/contactoEmergencia.routes.js'
 import eventosRoutes from './routes/eventos.routes.js'
-import recorridoRoutes from './routes/recorridos.routes.js'
+import recorridoRoutes from './routes/recorrido.routes.js'
 const app = express()
 
 const corsOptions = {
