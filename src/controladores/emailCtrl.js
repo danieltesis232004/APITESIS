@@ -8,7 +8,7 @@ export const enviarCodigoPorCorreo = async (req, res) => {
   try {
     // 🔹 Envía el correo
     const data = await resend.emails.send({
-      from: 'Soporte <notificacionesti2025@gmail.com>', 
+      from: 'Soporte <onboarding@resend.dev>',
       to: correoDestino,
       subject: 'Código de recuperación',
       text: `Tu código de recuperación es: ${codigo}`,
