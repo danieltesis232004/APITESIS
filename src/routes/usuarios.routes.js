@@ -6,7 +6,8 @@ import {
   verificarCorreo,
   actualizarContrasena,
   obtenerUsuarioPorId,
-  loginUsuario
+  loginUsuario,
+  obtenerUsuarioPorCorreo   
 } from '../controladores/usuariosCtrl.js';
 
 const router = express.Router();
@@ -17,4 +18,6 @@ router.get('/usuarios/:id_usuario', obtenerUsuarioPorId);
 router.put('/usuarios/:id_usuario', actualizarUsuario);
 router.get('/verificar/:correo_electronico', verificarCorreo);
 router.put('/usuarios/contrasena/:id_usuario/:contrasena', actualizarContrasena);
+router.get('/usuarios/correo/:correo_electronico', obtenerUsuarioPorCorreo);
+
 export default router;

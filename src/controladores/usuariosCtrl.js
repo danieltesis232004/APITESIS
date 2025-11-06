@@ -180,4 +180,27 @@ export const obetenerdatos = async (req, res) => {
         });
     }
 };
+export const obtenerUsuarioPorCorreo = async (req, res) => {
+  const { correo_electronico } = req.params;
+
+  if (!correo_electronico) {
+    return res.status(400).json({ message: "Falta el parámetro 'correo_electronico'" });
+  }
+
+  try {
+    const [result] = await sql.query(
+      'SELECT * FROM usuario WHERE correo_electronico = ? LIMIT 1',
+      [correo_electronico]
+    );
+
+    if (result.length > 0) {
+      res.json({ existe: true, usuario: result[0] });
+    } else {
+      res.status(404).json({ existe: false, message: "Usuario no encontrado" });
+    }
+  } catch (error) {
+    console.error('Error al obtener usuario por correo:', error);
+    res.status(500).json({ message: "Error en el servidor", error: error.message });
+  }
+};
 
