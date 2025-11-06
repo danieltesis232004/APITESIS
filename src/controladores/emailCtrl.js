@@ -8,7 +8,7 @@ export const enviarCodigoPorCorreo = async (req, res) => {
     apiInstance.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
 
     const sendSmtpEmail = {
-      sender: { name: 'Soporte Inédita', email: '9afdde001@smtp-brevo.com' },
+      sender: { name: 'Soporte Inédita', email: 'danieltesis232004@gmail.com' },
       to: [{ email: correoDestino }],
       subject: 'Código de recuperación',
       htmlContent: `
