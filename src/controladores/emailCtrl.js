@@ -23,7 +23,7 @@ export const enviarCodigoPorCorreo = async (req, res) => {
     console.log('Correo enviado:', info.response);
     res.status(200).json({ message: 'Correo enviado correctamente' });
   } catch (error) {
-    console.error('Error al enviar correo:', error);
+    console.error('Error al enviar correo: 1', error);
     res.status(500).json({ message: 'Error al enviar correo' });
   }
 };
