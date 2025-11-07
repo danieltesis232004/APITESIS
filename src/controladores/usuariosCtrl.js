@@ -62,8 +62,8 @@ export const actualizarUsuario = async (req, res) => {
   try {
     const [result] = await sql.query(
       `UPDATE usuario
-       SET correo_electronico = ?, nombre = ?, apellido = ?, telefono = ?, contrasena = ?, estado = ?, foto = ?
-       WHERE id_usuario = ?`,
+        SET correo_electronico = ?, nombre = ?, apellido = ?, telefono = ?, contrasena = ?, estado = ?, foto = ?
+        WHERE id_usuario = ?`,
       [correo_electronico, nombre, apellido, telefono, contrasena, estado, foto, id_usuario]
     );
 
@@ -98,8 +98,8 @@ export const crearUsuario = async (req, res) => {
 
     const [result] = await sql.query(
       `INSERT INTO usuario 
-      (correo_electronico, nombre, apellido, telefono, contrasena, estado, foto, fecha_de_registro)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        (correo_electronico, nombre, apellido, telefono, contrasena, estado, foto, fecha_de_registro)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         correo_electronico,
         nombre,
@@ -126,7 +126,7 @@ export const crearUsuario = async (req, res) => {
   }
 };
 export const loginUsuario = async (req, res) => {
-  const { correo_electronico, contrasena } = req.body; // <-- aquí
+  const { correo_electronico, contrasena } = req.body;
 
   if (!correo_electronico || !contrasena) {
     return res.status(400).json({ success: false, message: "Faltan correo o contraseña" });
@@ -134,20 +134,21 @@ export const loginUsuario = async (req, res) => {
 
   try {
     const [result] = await sql.query(
-      'SELECT * FROM usuario WHERE correo_electronico = ? AND contrasena = ?  and estado = activo LIMIT 1',
-      [correo_electronico, contrasena]
+      'SELECT * FROM usuario WHERE correo_electronico = ? AND contrasena = ? AND estado = ? LIMIT 1',
+      [correo_electronico, contrasena, 'activo']
     );
 
     if (result.length > 0) {
       res.json({ success: true, usuario: result[0] });
     } else {
-      res.json({ success: false, usuario: null, message: 'Correo o contraseña incorrectos' });
+      res.json({ success: false, usuario: null, message: 'Correo o contraseña incorrectos o usuario inactivo' });
     }
   } catch (error) {
     console.error('Error en login:', error);
     res.status(500).json({ success: false, message: "Error en el servidor", error: error.message });
   }
 };
+
 
 
 export const obtenerUsuarioPorId = async (req, res) => {
@@ -170,20 +171,20 @@ export const obtenerUsuarioPorId = async (req, res) => {
   }
 };
 export const obetenerdatos = async (req, res) => {
-    try {
-        const [result] = await sql.query('SELECT * FROM usuario');
-        res.json({ cant: result.length, data: result });
-    } catch (error) {
-        console.error('Error al obtener datos:', error);
-        return res.status(500).json({
-            message: "Error en el servidor",
-            error: {
-                message: error.message,
-                code: error.code,
-                stack: error.stack
-            }
-        });
-    }
+  try {
+    const [result] = await sql.query('SELECT * FROM usuario');
+    res.json({ cant: result.length, data: result });
+  } catch (error) {
+    console.error('Error al obtener datos:', error);
+    return res.status(500).json({
+      message: "Error en el servidor",
+      error: {
+        message: error.message,
+        code: error.code,
+        stack: error.stack
+      }
+    });
+  }
 };
 export const obtenerUsuarioPorCorreo = async (req, res) => {
   const { correo_electronico } = req.params;
