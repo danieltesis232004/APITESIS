@@ -126,7 +126,11 @@ export const crearUsuario = async (req, res) => {
   }
 };
 export const loginUsuario = async (req, res) => {
-  const { correo_electronico, contrasena } = req.params;
+  const { correo_electronico, contrasena } = req.body; // <-- aquí
+
+  if (!correo_electronico || !contrasena) {
+    return res.status(400).json({ success: false, message: "Faltan correo o contraseña" });
+  }
 
   try {
     const [result] = await sql.query(
@@ -137,13 +141,14 @@ export const loginUsuario = async (req, res) => {
     if (result.length > 0) {
       res.json({ success: true, usuario: result[0] });
     } else {
-      res.json({ success: false, message: 'Correo o contraseña incorrectos' });
+      res.json({ success: false, usuario: null, message: 'Correo o contraseña incorrectos' });
     }
   } catch (error) {
     console.error('Error en login:', error);
-    res.status(500).json({ message: "Error en el servidor", error: error.message });
+    res.status(500).json({ success: false, message: "Error en el servidor", error: error.message });
   }
 };
+
 
 export const obtenerUsuarioPorId = async (req, res) => {
   const { id_usuario } = req.params;
