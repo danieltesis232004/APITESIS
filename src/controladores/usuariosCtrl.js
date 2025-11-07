@@ -134,7 +134,7 @@ export const loginUsuario = async (req, res) => {
 
   try {
     const [result] = await sql.query(
-      'SELECT * FROM usuario WHERE correo_electronico = ? AND contrasena = ? LIMIT 1',
+      'SELECT * FROM usuario WHERE correo_electronico = ? AND contrasena = ?  and estado = activo LIMIT 1',
       [correo_electronico, contrasena]
     );
 
