@@ -195,8 +195,8 @@ export const obtenerUsuarioPorCorreo = async (req, res) => {
 
   try {
     const [result] = await sql.query(
-      'SELECT * FROM usuario WHERE correo_electronico = ? LIMIT 1',
-      [correo_electronico]
+      'SELECT * FROM usuario WHERE correo_electronico = ? AND estado = ? LIMIT 1',
+      [correo_electronico, 'activo']
     );
 
     if (result.length > 0) {
