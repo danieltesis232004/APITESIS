@@ -56,39 +56,11 @@ export const actualizarRecorrido = async (req, res) => {
   const { punto_partida, punto_destino, tiempo, distancia, estado } = req.body;
 
   try {
-    let campos = [];
-    let valores = [];
-
-    if (punto_partida !== undefined) {
-      campos.push('punto_partida = ?');
-      valores.push(punto_partida);
-    }
-    if (punto_destino !== undefined) {
-      campos.push('punto_destino = ?');
-      valores.push(punto_destino);
-    }
-    if (tiempo !== undefined) {
-      campos.push('tiempo = ?');
-      valores.push(tiempo);
-    }
-    if (distancia !== undefined) {
-      campos.push('distancia = ?');
-      valores.push(distancia);
-    }
-    if (estado !== undefined) {
-      campos.push('estado = ?');
-      valores.push(estado);
-    }
-
-    if (campos.length === 0) {
-      return res.status(400).json({ message: 'No hay campos para actualizar' });
-    }
-
-    valores.push(id_recorrido);
-
     const [result] = await sql.query(
-      `UPDATE recorridos SET ${campos.join(', ')} WHERE id_recorrido = ?`,
-      valores
+      `UPDATE recorridos
+       SET punto_partida = ?, punto_destino = ?, tiempo = ?, distancia = ?, estado = ?
+       WHERE id_recorrido = ?`,
+      [punto_partida, punto_destino, tiempo, distancia, estado, id_recorrido]
     );
 
     if (result.affectedRows === 0) {
@@ -101,7 +73,6 @@ export const actualizarRecorrido = async (req, res) => {
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };
-
 
 export const eliminarRecorrido = async (req, res) => {
   const { id_recorrido } = req.params;
