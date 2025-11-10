@@ -29,15 +29,15 @@ export const obtenerEventoPorId = async (req, res) => {
 
 export const crearEvento = async (req, res) => {
   try {
-    const { id_usuario, tipo_de_evento } = req.body;
+    const { id_usuario, tipo_de_evento, id_recorrido, fecha } = req.body;
 
-    if (!id_usuario || !tipo_de_evento) {
+    if (!id_usuario || !tipo_de_evento || !id_recorrido || !fecha) {
       return res.status(400).json({ message: "Faltan campos obligatorios" });
     }
 
     const [result] = await sql.query(
-      `INSERT INTO eventos (id_usuario, tipo_de_evento) VALUES (?, ?)`,
-      [id_usuario, tipo_de_evento]
+      `INSERT INTO eventos (id_usuario, tipo_de_evento, id_recorrido, fecha) VALUES (?, ?, ?, ?)`,
+      [id_usuario, tipo_de_evento, id_recorrido, fecha]
     );
 
     res.status(201).json({
@@ -49,6 +49,7 @@ export const crearEvento = async (req, res) => {
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };
+
 
 export const actualizarEvento = async (req, res) => {
   const { id_eventos } = req.params;
