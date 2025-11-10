@@ -2,7 +2,7 @@ import { sql } from '../bd.js';
 
 export const obtenerRecorridos = async (req, res) => {
   try {
-    const [result] = await sql.query('SELECT * FROM recorrido');
+    const [result] = await sql.query('SELECT * FROM recorridos');
     res.json({ cantidad: result.length, data: result });
   } catch (error) {
     console.error('Error al obtener recorridos:', error);
@@ -14,7 +14,7 @@ export const obtenerRecorridoPorId = async (req, res) => {
   const { id_recorrido } = req.params;
 
   try {
-    const [result] = await sql.query('SELECT * FROM recorrido WHERE id_recorrido = ?', [id_recorrido]);
+    const [result] = await sql.query('SELECT * FROM recorridos WHERE id_recorrido = ?', [id_recorrido]);
 
     if (result.length === 0) {
       return res.status(404).json({ message: 'Recorrido no encontrado' });
@@ -36,7 +36,7 @@ export const crearRecorrido = async (req, res) => {
     }
 
     const [result] = await sql.query(
-      `INSERT INTO recorrido (id_usuario, punto_partida, punto_destino, tiempo, distancia, estado)
+      `INSERT INTO recorridos (id_usuario, punto_partida, punto_destino, tiempo, distancia, estado)
        VALUES (?, ?, ?, ?, ?, ?)`,
       [id_usuario, punto_partida, punto_destino, tiempo, distancia, estado || 'en_progreso']
     );
@@ -57,7 +57,7 @@ export const actualizarRecorrido = async (req, res) => {
 
   try {
     const [result] = await sql.query(
-      `UPDATE recorrido
+      `UPDATE recorridos
        SET punto_partida = ?, punto_destino = ?, tiempo = ?, distancia = ?, estado = ?
        WHERE id_recorrido = ?`,
       [punto_partida, punto_destino, tiempo, distancia, estado, id_recorrido]
@@ -78,7 +78,7 @@ export const eliminarRecorrido = async (req, res) => {
   const { id_recorrido } = req.params;
 
   try {
-    const [result] = await sql.query('DELETE FROM recorrido WHERE id_recorrido = ?', [id_recorrido]);
+    const [result] = await sql.query('DELETE FROM recorridos WHERE id_recorrido = ?', [id_recorrido]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'Recorrido no encontrado' });
