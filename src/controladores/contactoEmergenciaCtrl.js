@@ -9,7 +9,7 @@ export const obtenerContactoEmergenciaPorId = async (req, res) => {
 
   try {
     const [result] = await sql.query(
-      'SELECT * FROM contacto_de_emergencia WHERE id_contacto_emergencia = ?',
+      'SELECT * FROM contactos_emergencia WHERE id_contacto_emergencia = ?',
       [id_contacto_emergencia]
     );
 
@@ -33,7 +33,7 @@ export const obtenerContactosPorUsuario = async (req, res) => {
 
   try {
     const [result] = await sql.query(
-      'SELECT * FROM contacto_de_emergencia WHERE id_usuario = ?',
+      'SELECT * FROM contactos_emergencia WHERE id_usuario = ?',
       [id_usuario]
     );
 
@@ -53,7 +53,7 @@ export const crearContactoEmergencia = async (req, res) => {
     }
 
     const [result] = await sql.query(
-      `INSERT INTO contacto_de_emergencia (id_usuario, tipo_de_contacto, numero)
+      `INSERT INTO contactos_emergencia (id_usuario, tipo_de_contacto, numero)
        VALUES (?, ?, ?)`,
       [id_usuario, tipo_de_contacto, numero]
     );
@@ -78,7 +78,7 @@ export const actualizarContactoEmergencia = async (req, res) => {
 
   try {
     const [result] = await sql.query(
-      `UPDATE contacto_de_emergencia
+      `UPDATE contactos_emergencia
        SET id_usuario = ?, tipo_de_contacto = ?, numero = ?
        WHERE id_contacto_emergencia = ?`,
       [id_usuario, tipo_de_contacto, numero, id_contacto_emergencia]
@@ -104,7 +104,7 @@ export const eliminarContactoEmergencia = async (req, res) => {
 
   try {
     const [result] = await sql.query(
-      'DELETE FROM contacto_de_emergencia WHERE id_contacto_emergencia = ?',
+      'DELETE FROM contactos_emergencia WHERE id_contacto_emergencia = ?',
       [id_contacto_emergencia]
     );
 
