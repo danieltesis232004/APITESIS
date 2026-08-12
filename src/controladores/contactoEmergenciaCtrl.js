@@ -46,16 +46,16 @@ export const obtenerContactosPorUsuario = async (req, res) => {
 
 export const crearContactoEmergencia = async (req, res) => {
   try {
-    const { id_usuario, tipo_de_contacto, numero } = req.body;
+    const { id_usuario, tipo_de_contacto, numero, correo } = req.body;
 
-    if (!id_usuario || !tipo_de_contacto || !numero) {
+    if (!id_usuario || !tipo_de_contacto || !numero || !correo) {
       return res.status(400).json({ message: "Faltan campos obligatorios" });
     }
 
     const [result] = await sql.query(
-      `INSERT INTO contactos_emergencia (id_usuario, tipo_de_contacto, numero)
-       VALUES (?, ?, ?)`,
-      [id_usuario, tipo_de_contacto, numero]
+      `INSERT INTO contactos_emergencia (id_usuario, tipo_de_contacto, numero, correo)
+       VALUES (?, ?, ?, ?)`,
+      [id_usuario, tipo_de_contacto, numero, correo]
     );
 
     res.status(201).json({
@@ -70,7 +70,7 @@ export const crearContactoEmergencia = async (req, res) => {
 
 export const actualizarContactoEmergencia = async (req, res) => {
   const { id_contacto_emergencia } = req.params;
-  const { id_usuario, tipo_de_contacto, numero } = req.body;
+  const { id_usuario, tipo_de_contacto, numero, correo } = req.body;
 
   if (!id_contacto_emergencia) {
     return res.status(400).json({ message: "Falta el parámetro 'id_contacto_emergencia'" });
@@ -79,9 +79,9 @@ export const actualizarContactoEmergencia = async (req, res) => {
   try {
     const [result] = await sql.query(
       `UPDATE contactos_emergencia
-       SET id_usuario = ?, tipo_de_contacto = ?, numero = ?
+       SET id_usuario = ?, tipo_de_contacto = ?, numero = ?, correo = ?
        WHERE id_contacto_emergencia = ?`,
-      [id_usuario, tipo_de_contacto, numero, id_contacto_emergencia]
+      [id_usuario, tipo_de_contacto, numero, correo, id_contacto_emergencia]
     );
 
     if (result.affectedRows === 0) {
