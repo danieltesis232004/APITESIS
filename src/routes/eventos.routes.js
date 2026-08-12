@@ -4,7 +4,8 @@ import {
   obtenerEventoPorId,
   crearEvento,
   actualizarEvento,
-  eliminarEvento
+  eliminarEvento,
+  crearTiempoReaccion
 } from '../controladores/eventosCtrl.js';
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.get('/eventos/:id_eventos', obtenerEventoPorId);
 router.post('/eventos', crearEvento);
 router.put('/eventos/:id_eventos', actualizarEvento);
 router.delete('/eventos/:id_eventos', eliminarEvento);
+router.post('/tiempos_reaccion', crearTiempoReaccion);
 
 export default router;

@@ -29,15 +29,14 @@ export const obtenerEventoPorId = async (req, res) => {
 
 export const crearEvento = async (req, res) => {
   try {
-    const { id_usuario, tipo_de_evento, id_recorrido, fecha } = req.body;
+    const { id_usuario, tipo_de_evento, id_recorrido, fecha, frecuencia_cardiaca } = req.body;
 
     if (!id_usuario || !tipo_de_evento || !id_recorrido || !fecha) {
       return res.status(400).json({ message: "Faltan campos obligatorios" });
     }
-
     const [result] = await sql.query(
-      `INSERT INTO eventos (id_usuario, tipo_de_evento, id_recorrido, fecha) VALUES (?, ?, ?, ?)`,
-      [id_usuario, tipo_de_evento, id_recorrido, fecha]
+      `INSERT INTO eventos (id_usuario, tipo_de_evento, id_recorrido, fecha, frecuencia_cardiaca) VALUES (?, ?, ?, ?, ?)`,
+      [id_usuario, tipo_de_evento, id_recorrido, fecha, frecuencia_cardiaca || null]
     );
 
     res.status(201).json({
@@ -49,7 +48,6 @@ export const crearEvento = async (req, res) => {
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };
-
 
 export const actualizarEvento = async (req, res) => {
   const { id_eventos } = req.params;
@@ -85,6 +83,39 @@ export const eliminarEvento = async (req, res) => {
     res.json({ message: 'Evento eliminado correctamente' });
   } catch (error) {
     console.error('Error al eliminar evento:', error);
+    res.status(500).json({ message: 'Error en el servidor' });
+  }
+};
+
+export const crearTiempoReaccion = async (req, res) => {
+  try {
+    const { 
+      id_usuario, 
+      id_recorrido, 
+      tipo_de_evento, 
+      frecuencia_cardiaca, 
+      hora_inicio, 
+      hora_fin, 
+      tiempo_reaccion_ms 
+    } = req.body;
+
+    if (!id_usuario || !id_recorrido || !tipo_de_evento || !hora_inicio || !hora_fin || tiempo_reaccion_ms === undefined) {
+      return res.status(400).json({ message: "Faltan campos obligatorios" });
+    }
+
+    const [result] = await sql.query(
+      `INSERT INTO tiempos_reaccion 
+      (id_usuario, id_recorrido, tipo_de_evento, frecuencia_cardiaca, hora_inicio, hora_fin, tiempo_reaccion_ms) 
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [id_usuario, id_recorrido, tipo_de_evento, frecuencia_cardiaca || null, hora_inicio, hora_fin, tiempo_reaccion_ms]
+    );
+
+    res.status(201).json({
+      message: 'Tiempo de reacción registrado exitosamente',
+      id_reaccion: result.insertId
+    });
+  } catch (error) {
+    console.error('Error al registrar tiempo de reacción:', error);
     res.status(500).json({ message: 'Error en el servidor' });
   }
 };
